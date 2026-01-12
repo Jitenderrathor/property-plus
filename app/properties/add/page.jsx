@@ -1,9 +1,9 @@
 import React from 'react'
 
-function AddProperties() {
+function AddPropertyPage() {
   return (
     <div>Add Properties</div>
   )
 }
 
-export default AddProperties
+export default AddPropertyPage
