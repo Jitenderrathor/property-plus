@@ -1,5 +1,5 @@
 import '@/assets/styles/globals.css'
-
+import Navbar from '@/conmpnents/Navbar'
 
 export const metadata = {
   title: 'Property Plus',
@@ -10,6 +10,7 @@ function MainLayout({ children }) {
   return (
     <html>
         <body>
+          <Navbar />
             <main>{children}</main>
         </body>
     </html>
