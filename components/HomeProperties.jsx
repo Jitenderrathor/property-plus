@@ -5,7 +5,10 @@ import Property from "@/models/Property";
 
 const HomeProperties = async () => {
   await connectDB();
-  const properties = await Property.find({}).lean();
+  const properties = await Property.find({})
+    .sort({ createdAt: -1 })
+    .limit(4)
+    .lean();
   const recentProperties = properties.slice(0, 4); // Show only the first 8 properties
   return (
     <>
