@@ -1,20 +1,19 @@
 import { Schema, model, models } from "mongoose";
-import { unique } from "next/dist/build/utils";
 
 const PropertySchema = new Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      require: true,
+      required: true,
     },
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     type: {
       type: String,
-      require: true,
+      required: true,
     },
     description: {
       type: String,
@@ -27,15 +26,15 @@ const PropertySchema = new Schema(
     },
     beds: {
       type: Number,
-      require: true,
+      required: true,
     },
     baths: {
       type: Number,
-      require: true,
+      required: true,
     },
     square_feet: {
       type: Number,
-      require: true,
+      required: true,
     },
     amenities: [
       {
@@ -62,9 +61,9 @@ const PropertySchema = new Schema(
       default: false,
     },
   },
-  { timeseries: true },
+  { timestamps: true },
 );
 
-const Property = model.Property || model("Property", PropertySchema);
+const Property = models.Property || model("Property", PropertySchema);
 
 export default Property;

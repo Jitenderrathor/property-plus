@@ -6,11 +6,11 @@ const UserSchema = new Schema(
     email: {
       type: String,
       unique: [true, "Email already exists"],
-      require: [true, "Email is required"],
+      required: [true, "Email is required"],
     },
     username: {
       type: String,
-      require: [true, "Username is required"],
+      required: [true, "Username is required"],
     },
     image: {
       type: String,
@@ -22,9 +22,9 @@ const UserSchema = new Schema(
       },
     ],
   },
-  { timeseries: true },
+  { timestamps: true },
 );
 
-const User = model.User || model("User", UserSchema);
+const User = models.User || model("User", UserSchema);
 
 export default User;

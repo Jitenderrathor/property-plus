@@ -1,8 +1,11 @@
-import properties from "@/properties.json";
 import PropertyCard from "@/components/PropertyCard";
 import Link from "next/link";
+import connectDB from "@/config/database";
+import Property from "@/models/Property";
 
-const HomeProperties = () => {
+const HomeProperties = async () => {
+  await connectDB();
+  const properties = await Property.find({}).lean();
   const recentProperties = properties.slice(0, 4); // Show only the first 8 properties
   return (
     <>
