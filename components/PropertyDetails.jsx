@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 
 const PrpertyDetails = ({ property }) => {
-  console.log(property);
+  // console.log(property);
   const {
     beds,
     baths,
