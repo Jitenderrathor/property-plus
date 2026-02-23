@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import logo from "@/assets/images/logo-white.png";
 import profileDefault from "@/assets/images/profile.png";
@@ -6,20 +7,22 @@ import Image from "next/image";
 import { FaGoogle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 function Navbar() {
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [providers, setProviders] = useState(null);
   const pathName = usePathname();
+  useEffect(() => {
+    const setAuthProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
 
-  // useEffect(() => {
-  //   const setAuthProviders = async () => {
-  //     const res = await getProviders();
-  //     setProviders(res);
-  //   };
-  //   setAuthProviders();
-  // }, []);
+    setAuthProviders();
+  }, []);
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -77,7 +80,7 @@ function Navbar() {
                 >
                   Properties
                 </Link>
-                {isLoggedIn && (
+                {session && (
                   <Link
                     href="/properties/add"
                     className={`text-white ${pathName === "/properties/add" ? "bg-black" : ""} hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
@@ -90,19 +93,26 @@ function Navbar() {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!isLoggedIn && (
+          {!session && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                  <FaGoogle className="text-white mr-2" />
-                  <span>Login or Register</span>
-                </button>
+                {providers &&
+                  Object.values(providers).map((provider, index) => (
+                    <button
+                      key={index}
+                      onClick={() => signIn(provider.id)}
+                      className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                    >
+                      <FaGoogle className="text-white mr-2" />
+                      <span>Login or Register</span>
+                    </button>
+                  ))}
               </div>
             </div>
           )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
-          {isLoggedIn && (
+          {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="/messages" className="relative group">
                 <button
@@ -212,7 +222,7 @@ function Navbar() {
             >
               Properties
             </Link>
-            {isLoggedIn && (
+            {session && (
               <Link
                 href="/properties/add"
                 className={`${pathName === "/properties/add" ? "bg-black" : ""} text-white block rounded-md px-3 py-2 text-base font-medium`}
@@ -221,7 +231,7 @@ function Navbar() {
               </Link>
             )}
 
-            {!isLoggedIn && (
+            {!session && (
               <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5">
                 <FaGoogle className="text-white mr-2" />
                 <span>Login or Register</span>
