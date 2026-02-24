@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider"; // Ensure this path is correct
 import "@/assets/styles/globals.css";
 
@@ -16,7 +16,7 @@ export default function MainLayout({ children }) {
         <AuthProvider>
           <Navbar />
           <main>{children}</main>
-          <Footer />
+          {/* <Footer /> */}
         </AuthProvider>
       </body>
     </html>

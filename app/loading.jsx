@@ -1,4 +1,5 @@
 "use client";
+
 import ClipLoader from "react-spinners/ClipLoader";
 
 // 1. Move this OUTSIDE the component to prevent re-creation on every render
